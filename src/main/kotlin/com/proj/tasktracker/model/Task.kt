@@ -12,10 +12,10 @@ import java.io.Serializable
 @Entity
 @Table(name = "tasks")
 open class Task(
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     open var title: String? = null,
 
-    @Column
+    @Column(nullable = false, length = 50)
     open var status: TaskStatus = TaskStatus.TODO,
 
     @JsonIgnore

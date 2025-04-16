@@ -11,7 +11,7 @@ import java.io.Serializable
 @Entity
 @Table(name = "tags")
 open class Tag(
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     open var name: String? = null,
 
     @JsonIgnore

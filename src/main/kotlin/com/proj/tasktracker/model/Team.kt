@@ -7,7 +7,7 @@ import java.io.Serializable
 @Entity
 @Table(name = "teams")
 open class Team(
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     open var name: String? = null,
 
     @JsonIgnore
