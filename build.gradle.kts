@@ -4,6 +4,7 @@ plugins {
 	id("org.springframework.boot") version "3.4.4"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("com.netflix.dgs.codegen") version "7.0.3"
+	kotlin("kapt") version "2.0.0"
 }
 
 group = "com.proj"
@@ -22,12 +23,16 @@ repositories {
 extra["netflixDgsVersion"] = "10.0.4"
 
 dependencies {
+	val mapstructVersion = "1.6.3"
+
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.liquibase:liquibase-core")
+	implementation("org.mapstruct:mapstruct:$mapstructVersion")
+	kapt("org.mapstruct:mapstruct-processor:$mapstructVersion")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter-test")
@@ -44,6 +49,16 @@ dependencyManagement {
 kotlin {
 	compilerOptions {
 		freeCompilerArgs.addAll("-Xjsr305=strict")
+	}
+}
+
+kapt {
+	correctErrorTypes = true
+	keepJavacAnnotationProcessors = true
+	arguments {
+		arg("mapstruct.defaultComponentModel", "spring")
+		arg("mapstruct.unmappedTargetPolicy", "IGNORE")
+		arg("mapstruct.defaultInjectionStrategy", "constructor")
 	}
 }
 
