@@ -2,11 +2,7 @@ package com.proj.tasktracker.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.proj.tasktracker.enums.TaskStatus
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.OneToMany
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.io.Serializable
 
 @Entity
@@ -16,6 +12,7 @@ open class Task(
     open var title: String? = null,
 
     @Column(nullable = false, length = 50)
+    @Enumerated(EnumType.STRING)
     open var status: TaskStatus = TaskStatus.TODO,
 
     @JsonIgnore
