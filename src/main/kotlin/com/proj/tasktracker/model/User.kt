@@ -40,6 +40,6 @@ open class User(
     }
 
     override fun toString(): String {
-        return "User(id=$id, name=$name, teamMembers=$teamMembers)"
+        return "User(id=$id, name=$name)"
     }
 }

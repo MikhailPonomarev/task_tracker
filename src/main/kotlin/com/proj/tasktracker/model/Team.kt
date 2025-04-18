@@ -32,6 +32,6 @@ open class Team(
     }
 
     override fun toString(): String {
-        return "Team(id=$id, name=$name, teamMembers=$teamMembers)"
+        return "Team(id=$id, name=$name)"
     }
 }
