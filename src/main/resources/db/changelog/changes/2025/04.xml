@@ -1,0 +1,135 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="2025-04.1" author="MikhailPonomarev">
+        <createTable tableName="users">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_users"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="teams">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_teams"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="team_members">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_team_members"/>
+            </column>
+            <column name="team_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="fk_team_members_team_id"
+                        referencedTableName="teams"
+                        referencedColumnNames="id"
+                />
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="fk_team_members_user_id"
+                        referencedTableName="users"
+                        referencedColumnNames="id"
+                />
+            </column>
+        </createTable>
+
+        <createTable tableName="tags">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_tags"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="tasks">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_tasks"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)" defaultValue="TODO">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="task_tags">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_task_tags"/>
+            </column>
+            <column name="task_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="fk_task_tags_task_id"
+                        referencedTableName="tasks"
+                        referencedColumnNames="id"
+                />
+            </column>
+            <column name="tag_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="fk_task_tags_tag_id"
+                        referencedTableName="tags"
+                        referencedColumnNames="id"
+                />
+            </column>
+        </createTable>
+        
+        <createTable tableName="task_assignees">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_task_assignees"/>
+            </column>
+            <column name="task_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="fk_task_assignees_task_id"
+                        referencedTableName="tasks"
+                        referencedColumnNames="id"
+                />
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="fk_task_assignees_user_id"
+                        referencedTableName="users"
+                        referencedColumnNames="id"
+                />
+            </column>
+        </createTable>
+
+        <createTable tableName="task_observers">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_task_observers"/>
+            </column>
+            <column name="task_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="fk_task_observers_task_id"
+                        referencedTableName="tasks"
+                        referencedColumnNames="id"
+                />
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="fk_task_observers_user_id"
+                        referencedTableName="users"
+                        referencedColumnNames="id"
+                />
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
